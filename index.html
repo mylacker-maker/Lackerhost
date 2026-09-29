@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LackerHost</title>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+    --bg: #0f1115;
+    --surface: #181a20;
+    --surface2: #22252e;
+    --border: #2a2d38;
+    --text: #f2f2f4;
+    --text-dim: #8b8f99;
+    --accent: #4DA6FF;
+    --accent-dim: rgba(77, 166, 255, 0.15);
+    --danger: #ff4757;
+    --success: #2ed573;
+    --warning: #ffa502;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+.hidden { display: none !important; }
+
+/* Header */
+.header { padding: 20px 24px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+
+/* Main Content */
+.main { flex: 1; overflow-y: auto; padding: 24px; }
+
+/* Projects List */
+.projects-header { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+.project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s; }
+.project-card:hover { border-color: var(--accent); background: var(--surface2); }
+.project-card:active { transform: scale(0.98); }
+
+.project-icon { width: 48px; height: 48px; border-radius: 10px; background: var(--surface2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.project-icon img { width: 32px; height: 32px; object-fit: contain; }
+
+.project-info { flex: 1; min-width: 0; }
+.project-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-desc { font-size: 13px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.project-status { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.status-dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-dot.online { background: var(--success); box-shadow: 0 0 8px var(--success); }
+.status-dot.offline { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+.status-dot.starting { background: var(--warning); box-shadow: 0 0 8px var(--warning); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.status-text { font-size: 13px; font-weight: 600; }
+.status-text.online { color: var(--success); }
+.status-text.offline { color: var(--danger); }
+.status-text.starting { color: var(--warning); }
+
+/* Editor View */
+.editor-view { display: flex; flex-direction: column; height: 100%; }
+.editor-toolbar { padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.toolbar-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+.toolbar-btn:hover { border-color: var(--accent); }
+.toolbar-btn:active { transform: scale(0.95); }
+.toolbar-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.toolbar-btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.toolbar-spacer { flex: 1; }
+
+.editor-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+#codeEditor { flex: 1; width: 100%; padding: 20px; background: var(--bg); color: var(--text); border: none; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.6; resize: none; tab-size: 4; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; padding: 20px; }
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
+.modal-overlay.active .modal { transform: scale(1); }
+.modal-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+.modal-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; text-align: left; }
+.modal-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+.modal-btn:active { transform: scale(0.98); }
+.modal-btn.danger { border-color: var(--danger); }
+.modal-btn.danger:hover { background: rgba(255, 71, 87, 0.1); }
+
+/* Logs */
+.logs-container { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
+.log-line { margin-bottom: 4px; word-break: break-word; }
+.log-line.error { color: var(--danger); }
+.log-line.info { color: var(--accent); }
+
+/* Empty State */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); }
+.empty-state-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.empty-state-text { font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- Main View -->
+<div id="mainView">
+    <div class="header">
+        <div class="logo">LackerHost</div>
+    </div>
+    <div class="main">
+        <div class="projects-header">Проекты</div>
+        <div id="projectsList"></div>
+        <div id="emptyState" class="empty-state hidden">
+            <div class="empty-state-title">Нет проектов</div>
+            <div class="empty-state-text">Создайте свой первый проект</div>
+        </div>
+    </div>
+</div>
+
+<!-- Editor View -->
+<div id="editorView" class="hidden editor-view">
+    <div class="editor-toolbar">
+        <button class="toolbar-btn" onclick="goBack()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Назад
+        </button>
+        <button class="toolbar-btn" onclick="openToolsModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Инструменты
+        </button>
+        <button class="toolbar-btn" onclick="openLogsModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Логи
+        </button>
+        <div class="toolbar-spacer"></div>
+        <button class="toolbar-btn primary" id="runBtn" onclick="toggleProject()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span id="runBtnText">Запустить</span>
+        </button>
+    </div>
+    <div class="editor-container">
+        <textarea id="codeEditor" placeholder="# Введите ваш Python код здесь..."></textarea>
+    </div>
+</div>
+
+<!-- Tools Modal -->
+<div class="modal-overlay" id="toolsModal">
+    <div class="modal">
+        <div class="modal-title">Инструменты</div>
+        <button class="modal-btn danger" onclick="clearAndStop()">Очистить код и остановить</button>
+        <button class="modal-btn danger" onclick="deleteProject()">Удалить проект</button>
+        <button class="modal-btn" onclick="closeModal('toolsModal')">Отмена</button>
+    </div>
+</div>
+
+<!-- Logs Modal -->
+<div class="modal-overlay" id="logsModal">
+    <div class="modal">
+        <div class="modal-title">Логи</div>
+        <div class="logs-container" id="logsContainer">
+            <div class="log-line info">Ожидание логов...</div>
+        </div>
+        <button class="modal-btn" onclick="closeModal('logsModal')" style="margin-top: 16px;">Закрыть</button>
+    </div>
+</div>
+
+<script>
+const firebaseConfig = { databaseURL: "https://lackerteam-default-rtdb.firebaseio.com/" };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+let userId = null;
+let currentProjectId = null;
+let currentProjectRef = null;
+let logsListener = null;
+
+// Получение userId из URL
+const urlParams = new URLSearchParams(window.location.search);
+userId = urlParams.get('id');
+
+if (!userId) {
+    alert('ID пользователя не указан в URL');
+}
+
+// Загрузка проектов
+function loadProjects() {
+    const projectsRef = db.ref(`py/users/${userId}/projects`);
+    
+    projectsRef.on('value', snapshot => {
+        const projects = snapshot.val() || {};
+        renderProjects(projects);
+    });
+}
+
+// Рендеринг списка проектов
+function renderProjects(projects) {
+    const list = document.getElementById('projectsList');
+    const emptyState = document.getElementById('emptyState');
+    
+    list.innerHTML = '';
+    
+    const projectIds = Object.keys(projects);
+    
+    if (projectIds.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+    }
+    
+    emptyState.classList.add('hidden');
+    
+    projectIds.forEach(projectId => {
+        const project = projects[projectId];
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.onclick = () => openProject(projectId);
+        
+        const status = project.status || 'offline';
+        const statusClass = status;
+        const statusText = status === 'online' ? 'online' : status === 'starting' ? 'starting' : 'offline';
+        
+        card.innerHTML = `
+            <div class="project-icon">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/python.svg" alt="Python" style="filter: invert(1);">
+            </div>
+            <div class="project-info">
+                <div class="project-name">${projectId}</div>
+                <div class="project-desc">Python проект</div>
+            </div>
+            <div class="project-status">
+                <div class="status-dot ${statusClass}"></div>
+                <div class="status-text ${statusText}">${statusText}</div>
+            </div>
+        `;
+        
+        list.appendChild(card);
+    });
+}
+
+// Открытие проекта
+function openProject(projectId) {
+    currentProjectId = projectId;
+    currentProjectRef = db.ref(`py/users/${userId}/projects/${projectId}`);
+    
+    document.getElementById('mainView').classList.add('hidden');
+    document.getElementById('editorView').classList.remove('hidden');
+    
+    // Загрузка кода
+    currentProjectRef.once('value').then(snapshot => {
+        const project = snapshot.val() || {};
+        document.getElementById('codeEditor').value = project.data_py || '';
+        updateRunButton(project.status || 'offline');
+    });
+    
+    // Real-time обновление статуса
+    currentProjectRef.on('value', snapshot => {
+        const project = snapshot.val() || {};
+        updateRunButton(project.status || 'offline');
+    });
+    
+    // Загрузка логов в real-time
+    if (logsListener) logsListener();
+    
+    const logsRef = db.ref(`py/users/${userId}/projects/${projectId}/logs`);
+    logsListener = logsRef.on('child_added', snapshot => {
+        const log = snapshot.val();
+        addLog(log.message, log.type);
+    });
+}
+
+// Обновление кнопки запуска
+function updateRunButton(status) {
+    const btn = document.getElementById('runBtn');
+    const text = document.getElementById('runBtnText');
+    
+    if (status === 'online' || status === 'starting') {
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span id="runBtnText">Остановить</span>`;
+    } else {
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg><span id="runBtnText">Запустить</span>`;
+    }
+}
+
+// Запуск/остановка проекта
+function toggleProject() {
+    const statusText = document.getElementById('runBtnText').textContent;
+    
+    if (statusText === 'Запустить') {
+        startProject();
+    } else {
+        stopProject();
+    }
+}
+
+function startProject() {
+    const code = document.getElementById('codeEditor').value;
+    
+    // Сначала сохраняем код
+    currentProjectRef.update({
+        data_py: code,
+        status: 'starting'
+    });
+    
+    // Через секунду меняем статус (сервер подхватит)
+    setTimeout(() => {
+        currentProjectRef.update({
+            status: 'online'
+        });
+    }, 1000);
+}
+
+function stopProject() {
+    currentProjectRef.update({
+        status: 'offline'
+    });
+}
+
+// Возврат назад
+function goBack() {
+    // Сохраняем код перед выходом
+    const code = document.getElementById('codeEditor').value;
+    currentProjectRef.update({
+        data_py: code
+    });
+    
+    if (logsListener) {
+        db.ref(`py/users/${userId}/projects/${currentProjectId}/logs`).off('child_added', logsListener);
+        logsListener = null;
+    }
+    
+    currentProjectRef.off();
+    currentProjectRef = null;
+    currentProjectId = null;
+    
+    document.getElementById('editorView').classList.add('hidden');
+    document.getElementById('mainView').classList.remove('hidden');
+    
+    // Очищаем логи
+    document.getElementById('logsContainer').innerHTML = '<div class="log-line info">Ожидание логов...</div>';
+}
+
+// Модальные окна
+function openToolsModal() {
+    document.getElementById('toolsModal').classList.add('active');
+}
+
+function openLogsModal() {
+    document.getElementById('logsModal').classList.add('active');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+// Инструменты
+function clearAndStop() {
+    if (!confirm('Очистить код и остановить проект?')) return;
+    
+    document.getElementById('codeEditor').value = '';
+    currentProjectRef.update({
+        data_py: '',
+        status: 'offline'
+    });
+    
+    closeModal('toolsModal');
+}
+
+function deleteProject() {
+    if (!confirm('Удалить проект? Это действие нельзя отменить.')) return;
+    
+    currentProjectRef.remove().then(() => {
+        closeModal('toolsModal');
+        goBack();
+    });
+}
+
+// Логи
+function addLog(message, type = 'info') {
+    const container = document.getElementById('logsContainer');
+    const firstLog = container.querySelector('.log-line.info');
+    if (firstLog && firstLog.textContent === 'Ожидание логов...') {
+        container.innerHTML = '';
+    }
+    
+    const logLine = document.createElement('div');
+    logLine.className = `log-line ${type}`;
+    logLine.textContent = message;
+    container.appendChild(logLine);
+    container.scrollTop = container.scrollHeight;
+}
+
+// Автосохранение кода
+let saveTimeout;
+document.getElementById('codeEditor').addEventListener('input', () => {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+        if (currentProjectRef) {
+            const code = document.getElementById('codeEditor').value;
+            currentProjectRef.update({
+                data_py: code
+            });
+        }
+    }, 1000);
+});
+
+// Закрытие модалок по клику на overlay
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.classList.remove('active');
+        }
+    });
+});
+
+// Старт
+loadProjects();
+</script>
+
+</body>
+</html>
