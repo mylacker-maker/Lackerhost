@@ -28,15 +28,15 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 
 .hidden { display: none !important; }
 
-/* Header */
 .header { padding: 20px 24px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.header-actions { display: flex; gap: 12px; }
+.lang-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.lang-btn:hover { border-color: var(--accent); }
 
-/* Main Content */
-.main { flex: 1; overflow-y: auto; padding: 24px; }
-
-/* Projects List */
+.main { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 100px; }
 .projects-header { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
 .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s; }
 .project-card:hover { border-color: var(--accent); background: var(--surface2); }
 .project-card:active { transform: scale(0.98); }
@@ -59,38 +59,46 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .status-text.offline { color: var(--danger); }
 .status-text.starting { color: var(--warning); }
 
-/* Editor View */
+.fab { position: fixed; bottom: 32px; right: 32px; width: 60px; height: 60px; border-radius: 50%; background: #ffffff; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 50; }
+.fab:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(0,0,0,0.4); }
+.fab:active { transform: scale(0.95); }
+.fab svg { width: 28px; height: 28px; stroke: #000000; stroke-width: 2.5; }
+
 .editor-view { display: flex; flex-direction: column; height: 100%; }
 .editor-toolbar { padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .toolbar-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
 .toolbar-btn:hover { border-color: var(--accent); }
 .toolbar-btn:active { transform: scale(0.95); }
 .toolbar-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.toolbar-btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
 .toolbar-spacer { flex: 1; }
 
 .editor-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 #codeEditor { flex: 1; width: 100%; padding: 20px; background: var(--bg); color: var(--text); border: none; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.6; resize: none; tab-size: 4; }
 
-/* Modal */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s; padding: 20px; }
 .modal-overlay.active { opacity: 1; visibility: visible; }
 .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
 .modal-overlay.active .modal { transform: scale(1); }
 .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; }
+.form-input { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+.form-input:focus { border-color: var(--accent); }
+.form-select { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; outline: none; cursor: pointer; }
+
 .modal-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; text-align: left; }
 .modal-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
 .modal-btn:active { transform: scale(0.98); }
 .modal-btn.danger { border-color: var(--danger); }
 .modal-btn.danger:hover { background: rgba(255, 71, 87, 0.1); }
+.modal-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; text-align: center; }
 
-/* Logs */
 .logs-container { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
 .log-line { margin-bottom: 4px; word-break: break-word; }
 .log-line.error { color: var(--danger); }
 .log-line.info { color: var(--accent); }
 
-/* Empty State */
 .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); }
 .empty-state-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
 .empty-state-text { font-size: 14px; }
@@ -98,65 +106,95 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 </head>
 <body>
 
-<!-- Main View -->
 <div id="mainView">
     <div class="header">
         <div class="logo">LackerHost</div>
-    </div>
-    <div class="main">
-        <div class="projects-header">Проекты</div>
-        <div id="projectsList"></div>
-        <div id="emptyState" class="empty-state hidden">
-            <div class="empty-state-title">Нет проектов</div>
-            <div class="empty-state-text">Создайте свой первый проект</div>
+        <div class="header-actions">
+            <button class="lang-btn" id="langBtn" onclick="openLangModal()">ENG</button>
         </div>
     </div>
+    <div class="main">
+        <div class="projects-header" data-i18n="projects">Projects</div>
+        <div id="projectsList"></div>
+        <div id="emptyState" class="empty-state hidden">
+            <div class="empty-state-title" data-i18n="noProjects">No projects</div>
+            <div class="empty-state-text" data-i18n="createFirst">Create your first project</div>
+        </div>
+    </div>
+    <button class="fab" onclick="openCreateModal()">
+        <svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
 </div>
 
-<!-- Editor View -->
 <div id="editorView" class="hidden editor-view">
     <div class="editor-toolbar">
         <button class="toolbar-btn" onclick="goBack()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-            Назад
+            <span data-i18n="back">Back</span>
         </button>
         <button class="toolbar-btn" onclick="openToolsModal()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            Инструменты
+            <span data-i18n="tools">Tools</span>
         </button>
         <button class="toolbar-btn" onclick="openLogsModal()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            Логи
+            <span data-i18n="logs">Logs</span>
         </button>
         <div class="toolbar-spacer"></div>
         <button class="toolbar-btn primary" id="runBtn" onclick="toggleProject()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <span id="runBtnText">Запустить</span>
+            <span id="runBtnText" data-i18n="run">Run</span>
         </button>
     </div>
     <div class="editor-container">
-        <textarea id="codeEditor" placeholder="# Введите ваш Python код здесь..."></textarea>
+        <textarea id="codeEditor" placeholder="# Enter your Python code here..."></textarea>
     </div>
 </div>
 
-<!-- Tools Modal -->
+<div class="modal-overlay" id="createModal">
+    <div class="modal">
+        <div class="modal-title" data-i18n="createProject">Create Project</div>
+        <div class="form-group">
+            <label class="form-label" data-i18n="projectName">Project Name</label>
+            <input type="text" class="form-input" id="projectNameInput" maxlength="20" placeholder="my-project">
+        </div>
+        <div class="form-group">
+            <label class="form-label" data-i18n="topic">Topic</label>
+            <select class="form-select" id="projectTypeSelect">
+                <option value="python">Python</option>
+            </select>
+        </div>
+        <button class="modal-btn primary" onclick="createProject()" data-i18n="create">Create</button>
+        <button class="modal-btn" onclick="closeModal('createModal')" data-i18n="cancel">Cancel</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="langModal">
+    <div class="modal">
+        <div class="modal-title" data-i18n="selectLanguage">Select Language</div>
+        <button class="modal-btn" onclick="setLanguage('en')">English</button>
+        <button class="modal-btn" onclick="setLanguage('ru')">Русский</button>
+        <button class="modal-btn" onclick="setLanguage('uk')">Українська</button>
+        <button class="modal-btn" onclick="closeModal('langModal')" data-i18n="cancel">Cancel</button>
+    </div>
+</div>
+
 <div class="modal-overlay" id="toolsModal">
     <div class="modal">
-        <div class="modal-title">Инструменты</div>
-        <button class="modal-btn danger" onclick="clearAndStop()">Очистить код и остановить</button>
-        <button class="modal-btn danger" onclick="deleteProject()">Удалить проект</button>
-        <button class="modal-btn" onclick="closeModal('toolsModal')">Отмена</button>
+        <div class="modal-title" data-i18n="tools">Tools</div>
+        <button class="modal-btn danger" onclick="clearAndStop()" data-i18n="clearAndStop">Clear code and stop</button>
+        <button class="modal-btn danger" onclick="deleteProject()" data-i18n="deleteProject">Delete project</button>
+        <button class="modal-btn" onclick="closeModal('toolsModal')" data-i18n="cancel">Cancel</button>
     </div>
 </div>
 
-<!-- Logs Modal -->
 <div class="modal-overlay" id="logsModal">
     <div class="modal">
-        <div class="modal-title">Логи</div>
+        <div class="modal-title" data-i18n="logs">Logs</div>
         <div class="logs-container" id="logsContainer">
-            <div class="log-line info">Ожидание логов...</div>
+            <div class="log-line info" data-i18n="waitingLogs">Waiting for logs...</div>
         </div>
-        <button class="modal-btn" onclick="closeModal('logsModal')" style="margin-top: 16px;">Закрыть</button>
+        <button class="modal-btn" onclick="closeModal('logsModal')" style="margin-top: 16px;" data-i18n="close">Close</button>
     </div>
 </div>
 
@@ -165,34 +203,142 @@ const firebaseConfig = { databaseURL: "https://lackerteam-default-rtdb.firebasei
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+const translations = {
+    en: {
+        projects: "Projects",
+        noProjects: "No projects",
+        createFirst: "Create your first project",
+        back: "Back",
+        tools: "Tools",
+        logs: "Logs",
+        run: "Run",
+        stop: "Stop",
+        starting: "Starting...",
+        createProject: "Create Project",
+        projectName: "Project Name",
+        topic: "Topic",
+        create: "Create",
+        cancel: "Cancel",
+        selectLanguage: "Select Language",
+        clearAndStop: "Clear code and stop",
+        deleteProject: "Delete project",
+        waitingLogs: "Waiting for logs...",
+        close: "Close",
+        pythonProject: "Python project",
+        nameExists: "Project name already exists",
+        nameEmpty: "Project name cannot be empty",
+        confirmClear: "Clear code and stop project?",
+        confirmDelete: "Delete project? This action cannot be undone."
+    },
+    ru: {
+        projects: "Проекты",
+        noProjects: "Нет проектов",
+        createFirst: "Создайте свой первый проект",
+        back: "Назад",
+        tools: "Инструменты",
+        logs: "Логи",
+        run: "Запустить",
+        stop: "Остановить",
+        starting: "Запуск...",
+        createProject: "Создать проект",
+        projectName: "Имя проекта",
+        topic: "Тематика",
+        create: "Создать",
+        cancel: "Отмена",
+        selectLanguage: "Выберите язык",
+        clearAndStop: "Очистить код и остановить",
+        deleteProject: "Удалить проект",
+        waitingLogs: "Ожидание логов...",
+        close: "Закрыть",
+        pythonProject: "Python проект",
+        nameExists: "Имя проекта уже существует",
+        nameEmpty: "Имя проекта не может быть пустым",
+        confirmClear: "Очистить код и остановить проект?",
+        confirmDelete: "Удалить проект? Это действие нельзя отменить."
+    },
+    uk: {
+        projects: "Проекти",
+        noProjects: "Немає проектів",
+        createFirst: "Створіть свій перший проект",
+        back: "Назад",
+        tools: "Інструменти",
+        logs: "Логи",
+        run: "Запустити",
+        stop: "Зупинити",
+        starting: "Запуск...",
+        createProject: "Створити проект",
+        projectName: "Ім'я проекту",
+        topic: "Тематика",
+        create: "Створити",
+        cancel: "Скасувати",
+        selectLanguage: "Виберіть мову",
+        clearAndStop: "Очистити код і зупинити",
+        deleteProject: "Видалити проект",
+        waitingLogs: "Очікування логів...",
+        close: "Закрити",
+        pythonProject: "Python проект",
+        nameExists: "Ім'я проекту вже існує",
+        nameEmpty: "Ім'я проекту не може бути порожнім",
+        confirmClear: "Очистити код і зупинити проект?",
+        confirmDelete: "Видалити проект? Цю дію не можна скасувати."
+    }
+};
+
+let currentLang = 'en';
 let userId = null;
 let currentProjectId = null;
 let currentProjectRef = null;
 let logsListener = null;
 
-// Получение userId из URL
 const urlParams = new URLSearchParams(window.location.search);
 userId = urlParams.get('id');
 
 if (!userId) {
-    alert('ID пользователя не указан в URL');
+    alert('User ID not specified in URL');
 }
 
-// Загрузка проектов
+function t(key) {
+    return translations[currentLang][key] || translations['en'][key] || key;
+}
+
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+    });
+    
+    const langBtn = document.getElementById('langBtn');
+    langBtn.textContent = currentLang.toUpperCase();
+}
+
+async function loadLanguage() {
+    const langSnap = await db.ref(`py/users/${userId}/lang`).once('value');
+    currentLang = langSnap.val() || 'en';
+    applyTranslations();
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    db.ref(`py/users/${userId}/lang`).set(lang);
+    applyTranslations();
+    closeModal('langModal');
+}
+
+function openLangModal() {
+    document.getElementById('langModal').classList.add('active');
+}
+
 function loadProjects() {
     const projectsRef = db.ref(`py/users/${userId}/projects`);
-    
     projectsRef.on('value', snapshot => {
         const projects = snapshot.val() || {};
         renderProjects(projects);
     });
 }
 
-// Рендеринг списка проектов
 function renderProjects(projects) {
     const list = document.getElementById('projectsList');
     const emptyState = document.getElementById('emptyState');
-    
     list.innerHTML = '';
     
     const projectIds = Object.keys(projects);
@@ -220,7 +366,7 @@ function renderProjects(projects) {
             </div>
             <div class="project-info">
                 <div class="project-name">${projectId}</div>
-                <div class="project-desc">Python проект</div>
+                <div class="project-desc">${t('pythonProject')}</div>
             </div>
             <div class="project-status">
                 <div class="status-dot ${statusClass}"></div>
@@ -232,7 +378,39 @@ function renderProjects(projects) {
     });
 }
 
-// Открытие проекта
+function openCreateModal() {
+    document.getElementById('projectNameInput').value = '';
+    document.getElementById('createModal').classList.add('active');
+}
+
+async function createProject() {
+    const name = document.getElementById('projectNameInput').value.trim();
+    const type = document.getElementById('projectTypeSelect').value;
+    
+    if (!name) {
+        alert(t('nameEmpty'));
+        return;
+    }
+    
+    const projectsRef = db.ref(`py/users/${userId}/projects`);
+    const snapshot = await projectsRef.once('value');
+    const projects = snapshot.val() || {};
+    
+    if (projects[name]) {
+        alert(t('nameExists'));
+        return;
+    }
+    
+    await projectsRef.child(name).set({
+        type: type,
+        status: 'offline',
+        data_py: '',
+        created: firebase.database.ServerValue.TIMESTAMP
+    });
+    
+    closeModal('createModal');
+}
+
 function openProject(projectId) {
     currentProjectId = projectId;
     currentProjectRef = db.ref(`py/users/${userId}/projects/${projectId}`);
@@ -240,20 +418,17 @@ function openProject(projectId) {
     document.getElementById('mainView').classList.add('hidden');
     document.getElementById('editorView').classList.remove('hidden');
     
-    // Загрузка кода
     currentProjectRef.once('value').then(snapshot => {
         const project = snapshot.val() || {};
         document.getElementById('codeEditor').value = project.data_py || '';
         updateRunButton(project.status || 'offline');
     });
     
-    // Real-time обновление статуса
     currentProjectRef.on('value', snapshot => {
         const project = snapshot.val() || {};
         updateRunButton(project.status || 'offline');
     });
     
-    // Загрузка логов в real-time
     if (logsListener) logsListener();
     
     const logsRef = db.ref(`py/users/${userId}/projects/${projectId}/logs`);
@@ -263,23 +438,21 @@ function openProject(projectId) {
     });
 }
 
-// Обновление кнопки запуска
 function updateRunButton(status) {
     const btn = document.getElementById('runBtn');
     const text = document.getElementById('runBtnText');
     
     if (status === 'online' || status === 'starting') {
-        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span id="runBtnText">Остановить</span>`;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span id="runBtnText">${t('stop')}</span>`;
     } else {
-        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg><span id="runBtnText">Запустить</span>`;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg><span id="runBtnText">${t('run')}</span>`;
     }
 }
 
-// Запуск/остановка проекта
 function toggleProject() {
     const statusText = document.getElementById('runBtnText').textContent;
     
-    if (statusText === 'Запустить') {
+    if (statusText === t('run')) {
         startProject();
     } else {
         stopProject();
@@ -289,13 +462,11 @@ function toggleProject() {
 function startProject() {
     const code = document.getElementById('codeEditor').value;
     
-    // Сначала сохраняем код
     currentProjectRef.update({
         data_py: code,
         status: 'starting'
     });
     
-    // Через секунду меняем статус (сервер подхватит)
     setTimeout(() => {
         currentProjectRef.update({
             status: 'online'
@@ -309,9 +480,7 @@ function stopProject() {
     });
 }
 
-// Возврат назад
 function goBack() {
-    // Сохраняем код перед выходом
     const code = document.getElementById('codeEditor').value;
     currentProjectRef.update({
         data_py: code
@@ -329,11 +498,9 @@ function goBack() {
     document.getElementById('editorView').classList.add('hidden');
     document.getElementById('mainView').classList.remove('hidden');
     
-    // Очищаем логи
-    document.getElementById('logsContainer').innerHTML = '<div class="log-line info">Ожидание логов...</div>';
+    document.getElementById('logsContainer').innerHTML = `<div class="log-line info">${t('waitingLogs')}</div>`;
 }
 
-// Модальные окна
 function openToolsModal() {
     document.getElementById('toolsModal').classList.add('active');
 }
@@ -346,9 +513,8 @@ function closeModal(id) {
     document.getElementById(id).classList.remove('active');
 }
 
-// Инструменты
 function clearAndStop() {
-    if (!confirm('Очистить код и остановить проект?')) return;
+    if (!confirm(t('confirmClear'))) return;
     
     document.getElementById('codeEditor').value = '';
     currentProjectRef.update({
@@ -360,7 +526,7 @@ function clearAndStop() {
 }
 
 function deleteProject() {
-    if (!confirm('Удалить проект? Это действие нельзя отменить.')) return;
+    if (!confirm(t('confirmDelete'))) return;
     
     currentProjectRef.remove().then(() => {
         closeModal('toolsModal');
@@ -368,11 +534,10 @@ function deleteProject() {
     });
 }
 
-// Логи
 function addLog(message, type = 'info') {
     const container = document.getElementById('logsContainer');
     const firstLog = container.querySelector('.log-line.info');
-    if (firstLog && firstLog.textContent === 'Ожидание логов...') {
+    if (firstLog && firstLog.textContent === t('waitingLogs')) {
         container.innerHTML = '';
     }
     
@@ -383,7 +548,6 @@ function addLog(message, type = 'info') {
     container.scrollTop = container.scrollHeight;
 }
 
-// Автосохранение кода
 let saveTimeout;
 document.getElementById('codeEditor').addEventListener('input', () => {
     clearTimeout(saveTimeout);
@@ -397,7 +561,6 @@ document.getElementById('codeEditor').addEventListener('input', () => {
     }, 1000);
 });
 
-// Закрытие модалок по клику на overlay
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {
@@ -406,8 +569,9 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
     });
 });
 
-// Старт
-loadProjects();
+loadLanguage().then(() => {
+    loadProjects();
+});
 </script>
 
 </body>
