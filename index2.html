@@ -30,11 +30,12 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .header { padding: 20px 24px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
 .header-actions { display: flex; gap: 12px; }
-.lang-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.lang-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .lang-btn:hover { border-color: var(--accent); }
 
 .main { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 100px; }
-.projects-header { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+.projects-header { font-size: 18px; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+.projects-counter { font-size: 13px; color: var(--text-dim); font-weight: 500; }
 
 .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s; }
 .project-card:hover { border-color: var(--accent); background: var(--surface2); }
@@ -43,7 +44,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .project-icon img { width: 32px; height: 32px; object-fit: contain; }
 .project-info { flex: 1; min-width: 0; }
 .project-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.project-desc { font-size: 13px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-desc { font-size: 13px; color: var(--text-dim); }
 .project-status { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .status-dot { width: 10px; height: 10px; border-radius: 50%; }
 .status-dot.online { background: var(--success); box-shadow: 0 0 8px var(--success); }
@@ -66,6 +67,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .toolbar-btn:hover { border-color: var(--accent); }
 .toolbar-btn:active { transform: scale(0.95); }
 .toolbar-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.toolbar-btn.warning { background: var(--warning); border-color: var(--warning); color: #000; }
 .toolbar-spacer { flex: 1; }
 
 .editor-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -83,19 +85,18 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .form-input:focus { border-color: var(--accent); }
 .form-select { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; outline: none; cursor: pointer; }
 
-.modal-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; text-align: left; }
+.modal-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; text-align: left; display: flex; align-items: center; gap: 10px; }
 .modal-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
 .modal-btn:active { transform: scale(0.98); }
 .modal-btn.danger { border-color: var(--danger); }
 .modal-btn.danger:hover { background: rgba(255, 71, 87, 0.1); }
-.modal-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; text-align: center; }
+.modal-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; text-align: center; justify-content: center; }
 
 /* Terminal */
-.terminal-container { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; max-height: 400px; overflow-y: auto; }
-.terminal-line { margin-bottom: 4px; word-break: break-word; white-space: pre-wrap; }
-.terminal-line.error { color: var(--danger); }
-.terminal-line.info { color: var(--accent); }
+.terminal-container { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; max-height: 400px; overflow-y: auto; color: #e0e0e0; }
+.terminal-line { margin-bottom: 2px; word-break: break-word; white-space: pre-wrap; }
 .terminal-line.system { color: var(--text-dim); font-style: italic; }
+.terminal-line.user-cmd { color: var(--accent); }
 .terminal-input-row { display: flex; gap: 8px; margin-top: 12px; }
 .terminal-input { flex: 1; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; outline: none; }
 .terminal-input:focus { border-color: var(--accent); }
@@ -106,7 +107,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 /* Files */
 .file-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--surface2); border-radius: 10px; margin-bottom: 8px; }
 .file-info { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-.file-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent); font-size: 14px; font-weight: 700; }
+.file-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent); font-size: 11px; font-weight: 700; }
 .file-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .file-size { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
 .file-actions { display: flex; gap: 6px; flex-shrink: 0; }
@@ -117,6 +118,16 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px; }
 .upload-zone:hover { border-color: var(--accent); background: var(--accent-dim); }
 .upload-zone input { display: none; }
+
+/* Env vars */
+.env-item { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--surface2); border-radius: 10px; margin-bottom: 8px; }
+.env-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.env-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.env-value.shown { color: var(--text); }
+.env-actions { display: flex; gap: 4px; flex-shrink: 0; }
+.icon-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
 .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); }
 .empty-state-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
@@ -133,7 +144,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
         </div>
     </div>
     <div class="main">
-        <div class="projects-header" data-i18n="projects">Projects</div>
+        <div class="projects-header">
+            <span data-i18n="projects">Projects</span>
+            <span class="projects-counter" id="projectsCounter">0 / 3</span>
+        </div>
         <div id="projectsList"></div>
         <div id="emptyState" class="empty-state hidden">
             <div class="empty-state-title" data-i18n="noProjects">No projects</div>
@@ -163,7 +177,15 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
             <span data-i18n="files">Files</span>
         </button>
+        <button class="toolbar-btn" onclick="openEnvModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>ENV</span>
+        </button>
         <div class="toolbar-spacer"></div>
+        <button class="toolbar-btn warning hidden" id="restartBtn" onclick="restartProject()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            <span data-i18n="restart">Restart</span>
+        </button>
         <button class="toolbar-btn primary" id="runBtn" onclick="toggleProject()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             <span id="runBtnText" data-i18n="run">Run</span>
@@ -206,6 +228,23 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
     </div>
 </div>
 
+<!-- Env Var Modal -->
+<div class="modal-overlay" id="envVarModal">
+    <div class="modal">
+        <div class="modal-title" id="envVarTitle">Environment Variable</div>
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" id="envVarName" placeholder="MY_VAR">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Value</label>
+            <input type="text" class="form-input" id="envVarValue" placeholder="value">
+        </div>
+        <button class="modal-btn primary" onclick="saveEnvVar()">Save</button>
+        <button class="modal-btn" onclick="closeModal('envVarModal')">Cancel</button>
+    </div>
+</div>
+
 <!-- Language Modal -->
 <div class="modal-overlay" id="langModal">
     <div class="modal">
@@ -221,9 +260,18 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 <div class="modal-overlay" id="toolsModal">
     <div class="modal">
         <div class="modal-title" data-i18n="tools">Tools</div>
-        <button class="modal-btn" onclick="openRenameModal()">Rename project</button>
-        <button class="modal-btn danger" onclick="clearAndStop()" data-i18n="clearAndStop">Clear code and stop</button>
-        <button class="modal-btn danger" onclick="deleteProject()" data-i18n="deleteProject">Delete project</button>
+        <button class="modal-btn" onclick="openRenameModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span data-i18n="renameProject">Rename project</span>
+        </button>
+        <button class="modal-btn danger" onclick="clearAndStop()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span data-i18n="clearAndStop">Clear code and stop</span>
+        </button>
+        <button class="modal-btn danger" onclick="deleteProject()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+            <span data-i18n="deleteProject">Delete project</span>
+        </button>
         <button class="modal-btn" onclick="closeModal('toolsModal')" data-i18n="cancel">Cancel</button>
     </div>
 </div>
@@ -257,44 +305,61 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
     </div>
 </div>
 
+<!-- Env Modal -->
+<div class="modal-overlay" id="envModal">
+    <div class="modal" style="max-width: 600px;">
+        <div class="modal-title">Environment Variables</div>
+        <button class="modal-btn primary" onclick="openEnvVarModal()" style="margin-bottom: 16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Create variable</span>
+        </button>
+        <div id="envList"></div>
+        <button class="modal-btn" onclick="closeModal('envModal')" style="margin-top: 16px;" data-i18n="close">Close</button>
+    </div>
+</div>
+
 <script>
 const firebaseConfig = { databaseURL: "https://lackerteam-default-rtdb.firebaseio.com/" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 const SERVER_URL = "http://139.100.236.142:5000";
+const PROJECT_LIMIT = 3;
 
 const translations = {
     en: {
         projects: "Projects", noProjects: "No projects", createFirst: "Create your first project",
         back: "Back", tools: "Tools", terminal: "Terminal", files: "Files", run: "Run", stop: "Stop",
-        starting: "Starting...", createProject: "Create Project", projectName: "Project Name",
+        restart: "Restart", createProject: "Create Project", projectName: "Project Name",
         topic: "Topic", create: "Create", cancel: "Cancel", selectLanguage: "Select Language",
         clearAndStop: "Clear code and stop", deleteProject: "Delete project", renameProject: "Rename Project",
         newName: "New Name", rename: "Rename", close: "Close", pythonProject: "Python project",
         nameExists: "Project name already exists", nameEmpty: "Project name cannot be empty",
+        limitReached: "Project limit reached (max 3)",
         confirmClear: "Clear code and stop project?", confirmDelete: "Delete project? This action cannot be undone.",
         confirmRename: "Rename project?"
     },
     ru: {
         projects: "Проекты", noProjects: "Нет проектов", createFirst: "Создайте свой первый проект",
         back: "Назад", tools: "Инструменты", terminal: "Терминал", files: "Файлы", run: "Запустить", stop: "Остановить",
-        starting: "Запуск...", createProject: "Создать проект", projectName: "Имя проекта",
+        restart: "Перезапустить", createProject: "Создать проект", projectName: "Имя проекта",
         topic: "Тематика", create: "Создать", cancel: "Отмена", selectLanguage: "Выберите язык",
         clearAndStop: "Очистить код и остановить", deleteProject: "Удалить проект", renameProject: "Переименовать проект",
         newName: "Новое имя", rename: "Переименовать", close: "Закрыть", pythonProject: "Python проект",
         nameExists: "Имя проекта уже существует", nameEmpty: "Имя проекта не может быть пустым",
+        limitReached: "Достигнут лимит проектов (макс. 3)",
         confirmClear: "Очистить код и остановить проект?", confirmDelete: "Удалить проект? Это действие нельзя отменить.",
         confirmRename: "Переименовать проект?"
     },
     uk: {
         projects: "Проекти", noProjects: "Немає проектів", createFirst: "Створіть свій перший проект",
         back: "Назад", tools: "Інструменти", terminal: "Термінал", files: "Файли", run: "Запустити", stop: "Зупинити",
-        starting: "Запуск...", createProject: "Створити проект", projectName: "Ім'я проекту",
+        restart: "Перезапустити", createProject: "Створити проект", projectName: "Ім'я проекту",
         topic: "Тематика", create: "Створити", cancel: "Скасувати", selectLanguage: "Виберіть мову",
         clearAndStop: "Очистити код і зупинити", deleteProject: "Видалити проект", renameProject: "Перейменувати проект",
         newName: "Нове ім'я", rename: "Перейменувати", close: "Закрити", pythonProject: "Python проект",
         nameExists: "Ім'я проекту вже існує", nameEmpty: "Ім'я проекту не може бути порожнім",
+        limitReached: "Досягнуто ліміт проектів (макс. 3)",
         confirmClear: "Очистити код і зупинити проект?", confirmDelete: "Видалити проект? Цю дію не можна скасувати.",
         confirmRename: "Перейменувати проект?"
     }
@@ -306,6 +371,8 @@ let currentProjectId = null;
 let currentProjectRef = null;
 let logsListener = null;
 let currentStatus = 'offline';
+let envVarsCache = {};
+let editingEnvVar = null;
 
 const urlParams = new URLSearchParams(window.location.search);
 userId = urlParams.get('id');
@@ -337,7 +404,9 @@ function openLangModal() { document.getElementById('langModal').classList.add('a
 
 function loadProjects() {
     db.ref(`py/users/${userId}/projects`).on('value', snapshot => {
-        renderProjects(snapshot.val() || {});
+        const projects = snapshot.val() || {};
+        renderProjects(projects);
+        document.getElementById('projectsCounter').textContent = `${Object.keys(projects).length} / ${PROJECT_LIMIT}`;
     });
 }
 
@@ -369,8 +438,16 @@ function renderProjects(projects) {
 }
 
 function openCreateModal() {
-    document.getElementById('projectNameInput').value = '';
-    document.getElementById('createModal').classList.add('active');
+    const projectsRef = db.ref(`py/users/${userId}/projects`);
+    projectsRef.once('value').then(snap => {
+        const count = Object.keys(snap.val() || {}).length;
+        if (count >= PROJECT_LIMIT) {
+            alert(t('limitReached'));
+            return;
+        }
+        document.getElementById('projectNameInput').value = '';
+        document.getElementById('createModal').classList.add('active');
+    });
 }
 
 async function createProject() {
@@ -379,8 +456,10 @@ async function createProject() {
     if (!name) { alert(t('nameEmpty')); return; }
     const ref = db.ref(`py/users/${userId}/projects`);
     const snap = await ref.once('value');
-    if (snap.val() && snap.val()[name]) { alert(t('nameExists')); return; }
-    await ref.child(name).set({ type, status: 'offline', data_py: '', created: firebase.database.ServerValue.TIMESTAMP });
+    const projects = snap.val() || {};
+    if (Object.keys(projects).length >= PROJECT_LIMIT) { alert(t('limitReached')); return; }
+    if (projects[name]) { alert(t('nameExists')); return; }
+    await ref.child(name).set({ type, status: 'offline', created: firebase.database.ServerValue.TIMESTAMP });
     closeModal('createModal');
 }
 
@@ -389,34 +468,52 @@ function openProject(projectId) {
     currentProjectRef = db.ref(`py/users/${userId}/projects/${projectId}`);
     document.getElementById('mainView').classList.add('hidden');
     document.getElementById('editorView').classList.remove('hidden');
-    currentProjectRef.once('value').then(snap => {
-        const p = snap.val() || {};
-        document.getElementById('codeEditor').value = p.data_py || '';
-        updateRunButton(p.status || 'offline');
-    });
+    
+    // Загружаем код через Flask
+    loadCodeFromServer();
+    
     currentProjectRef.on('value', snap => {
         const p = snap.val() || {};
         updateRunButton(p.status || 'offline');
         updateTerminalInput(p.status || 'offline');
     });
+    
     if (logsListener) db.ref(`py/users/${userId}/projects/${projectId}/logs`).off('child_added', logsListener);
     logsListener = db.ref(`py/users/${userId}/projects/${projectId}/logs`).on('child_added', snap => {
         const l = snap.val();
         addTerminalLine(l.message, l.type);
-        // Автоматически открываем терминал при запуске
         if (!document.getElementById('terminalModal').classList.contains('active')) {
             openTerminalModal();
         }
     });
 }
 
+async function loadCodeFromServer() {
+    try {
+        const response = await fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`);
+        if (response.ok) {
+            const code = await response.text();
+            document.getElementById('codeEditor').value = code;
+        }
+    } catch (e) {
+        console.error('Load code error:', e);
+    }
+}
+
 function updateRunButton(status) {
     currentStatus = status;
     const btn = document.getElementById('runBtn');
-    if (status === 'online' || status === 'starting') {
+    const restartBtn = document.getElementById('restartBtn');
+    
+    if (status === 'online') {
         btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span id="runBtnText">${t('stop')}</span>`;
+        restartBtn.classList.remove('hidden');
+    } else if (status === 'starting') {
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span id="runBtnText">${t('stop')}</span>`;
+        restartBtn.classList.add('hidden');
     } else {
         btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg><span id="runBtnText">${t('run')}</span>`;
+        restartBtn.classList.add('hidden');
     }
 }
 
@@ -434,21 +531,43 @@ function toggleProject() {
     else startProject();
 }
 
-function startProject() {
+async function startProject() {
     const code = document.getElementById('codeEditor').value;
-    // Очищаем логи перед запуском
+    
+    // Отправляем код на Flask как plain text
+    try {
+        const response = await fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+            body: code
+        });
+        if (!response.ok) {
+            alert('Failed to save code');
+            return;
+        }
+    } catch (e) {
+        alert('Connection error: ' + e.message);
+        return;
+    }
+    
+    // Очищаем логи и ставим статус
     db.ref(`py/users/${userId}/projects/${currentProjectId}/logs`).remove();
     document.getElementById('terminalContainer').innerHTML = '';
-    currentProjectRef.update({ data_py: code, status: 'starting' });
+    currentProjectRef.update({ status: 'starting' });
 }
 
 function stopProject() {
     currentProjectRef.update({ status: 'offline' });
 }
 
+function restartProject() {
+    currentProjectRef.update({ status: 'offline' });
+    setTimeout(() => {
+        startProject();
+    }, 1500);
+}
+
 function goBack() {
-    const code = document.getElementById('codeEditor').value;
-    currentProjectRef.update({ data_py: code });
     if (logsListener) {
         db.ref(`py/users/${userId}/projects/${currentProjectId}/logs`).off('child_added', logsListener);
         logsListener = null;
@@ -467,12 +586,10 @@ function openTerminalModal() {
     const container = document.getElementById('terminalContainer');
     container.scrollTop = container.scrollHeight;
 }
-
 function openFilesModal() {
     document.getElementById('filesModal').classList.add('active');
     loadFiles();
 }
-
 function openRenameModal() {
     document.getElementById('renameInput').value = currentProjectId;
     closeModal('toolsModal');
@@ -490,12 +607,8 @@ async function confirmRename() {
     const projects = snap.val() || {};
     if (projects[newName]) { alert(t('nameExists')); return; }
     
-    // Получаем данные старого проекта
     const oldData = projects[currentProjectId];
-    
-    // Создаём новый проект с теми же данными
     await projectsRef.child(newName).set(oldData);
-    // Удаляем старый
     await projectsRef.child(currentProjectId).remove();
     
     closeModal('renameModal');
@@ -508,18 +621,20 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 function clearAndStop() {
     if (!confirm(t('confirmClear'))) return;
     document.getElementById('codeEditor').value = '';
-    currentProjectRef.update({ data_py: '', status: 'offline' });
+    // Очищаем код на сервере
+    fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        body: ''
+    });
+    currentProjectRef.update({ status: 'offline' });
     closeModal('toolsModal');
 }
 
 async function deleteProject() {
     if (!confirm(t('confirmDelete'))) return;
     try {
-        // Сначала останавливаем процесс через статус
-        await currentProjectRef.update({ status: 'offline' });
-        // Ждём немного чтобы сервер остановил процесс
-        await new Promise(r => setTimeout(r, 1000));
-        // Теперь удаляем проект
+        // Просто удаляем ключ напрямую
         await currentProjectRef.remove();
         closeModal('toolsModal');
         goBack();
@@ -529,25 +644,106 @@ async function deleteProject() {
     }
 }
 
+// ===== ANSI PARSER =====
+function escapeHtml(text) {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function parseAnsi(text) {
+    // Regex для ANSI escape последовательностей
+    const ansiRegex = /\x1b\[([0-9;]*)m/g;
+    let result = '';
+    let lastIndex = 0;
+    let styles = [];
+    let match;
+    
+    const fgColors = {
+        '30': '#3a3a3a', '31': '#ff5555', '32': '#50fa7b', '33': '#f1fa8c',
+        '34': '#bd93f9', '35': '#ff79c6', '36': '#8be9fd', '37': '#f8f8f2',
+        '90': '#6272a4', '91': '#ff6e6e', '92': '#69ff94', '93': '#ffffa5',
+        '94': '#d6acff', '95': '#ff92df', '96': '#a4ffff', '97': '#ffffff'
+    };
+    const bgColors = {
+        '40': '#21222c', '41': '#ff5555', '42': '#50fa7b', '43': '#f1fa8c',
+        '44': '#bd93f9', '45': '#ff79c6', '46': '#8be9fd', '47': '#f8f8f2',
+        '100': '#6272a4', '101': '#ff6e6e', '102': '#69ff94', '103': '#ffffa5',
+        '104': '#d6acff', '105': '#ff92df', '106': '#a4ffff', '107': '#ffffff'
+    };
+    
+    while ((match = ansiRegex.exec(text)) !== null) {
+        // Добавляем текст до escape последовательности
+        result += `<span style="${buildStyle(styles)}">${escapeHtml(text.slice(lastIndex, match.index))}</span>`;
+        lastIndex = match.index + match[0].length;
+        
+        const codes = match[1].split(';').filter(c => c);
+        if (codes.length === 0 || (codes.length === 1 && codes[0] === '')) {
+            codes.push('0');
+        }
+        
+        for (const code of codes) {
+            const c = parseInt(code);
+            if (c === 0) {
+                styles = [];
+            } else if (c === 1) {
+                if (!styles.includes('bold')) styles.push('bold');
+            } else if (c === 3) {
+                if (!styles.includes('italic')) styles.push('italic');
+            } else if (c === 4) {
+                if (!styles.includes('underline')) styles.push('underline');
+            } else if (fgColors[code]) {
+                styles = styles.filter(s => !s.startsWith('fg:'));
+                styles.push('fg:' + fgColors[code]);
+            } else if (bgColors[code]) {
+                styles = styles.filter(s => !s.startsWith('bg:'));
+                styles.push('bg:' + bgColors[code]);
+            }
+        }
+    }
+    
+    // Добавляем оставшийся текст
+    result += `<span style="${buildStyle(styles)}">${escapeHtml(text.slice(lastIndex))}</span>`;
+    return result;
+}
+
+function buildStyle(styles) {
+    let css = '';
+    for (const s of styles) {
+        if (s === 'bold') css += 'font-weight: bold;';
+        else if (s === 'italic') css += 'font-style: italic;';
+        else if (s === 'underline') css += 'text-decoration: underline;';
+        else if (s.startsWith('fg:')) css += `color: ${s.slice(3)};`;
+        else if (s.startsWith('bg:')) css += `background-color: ${s.slice(3)};`;
+    }
+    return css;
+}
+
 // ===== TERMINAL =====
 function addTerminalLine(message, type = 'info') {
     const container = document.getElementById('terminalContainer');
     const firstLine = container.querySelector('.terminal-line.system');
     if (firstLine && firstLine.textContent === 'Waiting for logs...') container.innerHTML = '';
+    
     const line = document.createElement('div');
     line.className = `terminal-line ${type}`;
-    line.textContent = message;
+    
+    if (type === 'error' || type === 'info') {
+        // Парсим ANSI коды
+        line.innerHTML = parseAnsi(message);
+    } else {
+        line.textContent = message;
+    }
+    
     container.appendChild(line);
     container.scrollTop = container.scrollHeight;
 }
 
 async function sendCommand() {
     const input = document.getElementById('terminalInput');
-    const cmd = input.value.trim();
+    const cmd = input.value;
     if (!cmd || currentStatus !== 'online') return;
     input.value = '';
     
-    addTerminalLine(`$ ${cmd}`, 'system');
+    addTerminalLine(`$ ${cmd}`, 'user-cmd');
     
     try {
         const response = await fetch(`${SERVER_URL}/command/${userId}/${currentProjectId}`, {
@@ -624,8 +820,7 @@ async function uploadFiles() {
         
         try {
             const response = await fetch(`${SERVER_URL}/files/${userId}/${currentProjectId}/upload`, {
-                method: 'POST',
-                body: formData
+                method: 'POST', body: formData
             });
             if (!response.ok) throw new Error('Upload failed');
         } catch (e) {
@@ -644,13 +839,153 @@ function downloadFile(filename) {
 async function deleteFile(filename) {
     if (!confirm(`Delete ${filename}?`)) return;
     try {
-        const response = await fetch(`${SERVER_URL}/files/${userId}/${currentProjectId}/${filename}`, {
-            method: 'DELETE'
-        });
+        const response = await fetch(`${SERVER_URL}/files/${userId}/${currentProjectId}/${filename}`, { method: 'DELETE' });
         if (!response.ok) throw new Error('Delete failed');
         loadFiles();
     } catch (e) {
         alert(`Error: ${e.message}`);
+    }
+}
+
+// ===== ENV VARS =====
+async function loadEnvVars() {
+    try {
+        const response = await fetch(`${SERVER_URL}/env/${userId}/${currentProjectId}`);
+        if (!response.ok) throw new Error('Failed to load env vars');
+        envVarsCache = await response.json();
+        renderEnvList();
+    } catch (e) {
+        document.getElementById('envList').innerHTML = `<div style="color: var(--danger); text-align: center; padding: 20px;">Error: ${e.message}</div>`;
+    }
+}
+
+function renderEnvList() {
+    const list = document.getElementById('envList');
+    const keys = Object.keys(envVarsCache);
+    
+    if (keys.length === 0) {
+        list.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;">No environment variables</div>';
+        return;
+    }
+    
+    list.innerHTML = '';
+    keys.forEach(name => {
+        const value = envVarsCache[name];
+        const item = document.createElement('div');
+        item.className = 'env-item';
+        item.innerHTML = `
+            <div style="flex: 1; min-width: 0;">
+                <div class="env-name">${name}</div>
+                <div class="env-value" data-value="${escapeAttr(value)}" data-shown="false">••••••••</div>
+            </div>
+            <div class="env-actions">
+                <button class="icon-btn" onclick="toggleEnvValue(this)" title="Show/Hide">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="icon-btn" onclick="copyEnvValue('${escapeAttr(name)}')" title="Copy">
+                    <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+                <button class="icon-btn" onclick="editEnvVar('${escapeAttr(name)}')" title="Edit">
+                    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="icon-btn" onclick="deleteEnvVar('${escapeAttr(name)}')" title="Delete" style="color: var(--danger);">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+            </div>`;
+        list.appendChild(item);
+    });
+}
+
+function escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function toggleEnvValue(btn) {
+    const item = btn.closest('.env-item');
+    const valueEl = item.querySelector('.env-value');
+    const shown = valueEl.dataset.shown === 'true';
+    
+    if (shown) {
+        valueEl.textContent = '••••••••';
+        valueEl.classList.remove('shown');
+        valueEl.dataset.shown = 'false';
+    } else {
+        valueEl.textContent = valueEl.dataset.value;
+        valueEl.classList.add('shown');
+        valueEl.dataset.shown = 'true';
+    }
+}
+
+async function copyEnvValue(name) {
+    const value = envVarsCache[name];
+    try {
+        await navigator.clipboard.writeText(value);
+        alert('Copied!');
+    } catch (e) {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = value;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('Copied!');
+    }
+}
+
+function openEnvModal() {
+    document.getElementById('envModal').classList.add('active');
+    loadEnvVars();
+}
+
+function openEnvVarModal(name = null) {
+    editingEnvVar = name;
+    document.getElementById('envVarTitle').textContent = name ? 'Edit Variable' : 'Create Variable';
+    document.getElementById('envVarName').value = name || '';
+    document.getElementById('envVarName').disabled = !!name;
+    document.getElementById('envVarValue').value = name ? (envVarsCache[name] || '') : '';
+    document.getElementById('envVarModal').classList.add('active');
+}
+
+function editEnvVar(name) {
+    openEnvVarModal(name);
+}
+
+async function saveEnvVar() {
+    const name = document.getElementById('envVarName').value.trim();
+    const value = document.getElementById('envVarValue').value;
+    
+    if (!name) { alert('Name cannot be empty'); return; }
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) {
+        alert('Invalid variable name. Use letters, digits, underscore.');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${SERVER_URL}/env/${userId}/${currentProjectId}/${encodeURIComponent(name)}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+            body: value
+        });
+        if (!response.ok) throw new Error('Save failed');
+        
+        closeModal('envVarModal');
+        loadEnvVars();
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
+}
+
+async function deleteEnvVar(name) {
+    if (!confirm(`Delete variable "${name}"?`)) return;
+    try {
+        const response = await fetch(`${SERVER_URL}/env/${userId}/${currentProjectId}/${encodeURIComponent(name)}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) throw new Error('Delete failed');
+        loadEnvVars();
+    } catch (e) {
+        alert('Error: ' + e.message);
     }
 }
 
@@ -659,8 +994,13 @@ let saveTimeout;
 document.getElementById('codeEditor').addEventListener('input', () => {
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
-        if (currentProjectRef) {
-            currentProjectRef.update({ data_py: document.getElementById('codeEditor').value });
+        if (currentProjectId) {
+            const code = document.getElementById('codeEditor').value;
+            fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+                body: code
+            }).catch(e => console.error('Autosave error:', e));
         }
     }, 1000);
 });
@@ -673,4 +1013,4 @@ loadLanguage().then(() => loadProjects());
 </script>
 
 </body>
-              </html>
+    </html>
