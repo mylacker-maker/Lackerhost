@@ -104,21 +104,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .terminal-send-btn { padding: 10px 16px; border-radius: 8px; border: none; background: var(--accent); color: #fff; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .terminal-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Files */
-.file-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--surface2); border-radius: 10px; margin-bottom: 8px; }
-.file-info { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-.file-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent); font-size: 11px; font-weight: 700; }
-.file-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.file-size { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
-.file-actions { display: flex; gap: 6px; flex-shrink: 0; }
-.file-btn { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; }
-.file-btn:hover { border-color: var(--accent); }
-.file-btn.danger:hover { border-color: var(--danger); color: var(--danger); }
-
-.upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px; }
-.upload-zone:hover { border-color: var(--accent); background: var(--accent-dim); }
-.upload-zone input { display: none; }
-
 /* Env vars */
 .env-item { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--surface2); border-radius: 10px; margin-bottom: 8px; }
 .env-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -172,10 +157,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
         <button class="toolbar-btn" onclick="openTerminalModal()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
             <span data-i18n="terminal">Terminal</span>
-        </button>
-        <button class="toolbar-btn" onclick="openFilesModal()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            <span data-i18n="files">Files</span>
         </button>
         <button class="toolbar-btn" onclick="openEnvModal()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -291,20 +272,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
     </div>
 </div>
 
-<!-- Files Modal -->
-<div class="modal-overlay" id="filesModal">
-    <div class="modal" style="max-width: 600px;">
-        <div class="modal-title" data-i18n="files">Files</div>
-        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-            <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">Click to upload file</div>
-            <div style="font-size: 12px; color: var(--text-dim);">Files will be saved in project directory</div>
-            <input type="file" id="fileInput" multiple onchange="uploadFiles()">
-        </div>
-        <div id="filesList"></div>
-        <button class="modal-btn" onclick="closeModal('filesModal')" style="margin-top: 16px;" data-i18n="close">Close</button>
-    </div>
-</div>
-
 <!-- Env Modal -->
 <div class="modal-overlay" id="envModal">
     <div class="modal" style="max-width: 600px;">
@@ -323,13 +290,12 @@ const firebaseConfig = { databaseURL: "https://lackerteam-default-rtdb.firebasei
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const SERVER_URL = "http://139.100.236.142:5000";
 const PROJECT_LIMIT = 3;
 
 const translations = {
     en: {
         projects: "Projects", noProjects: "No projects", createFirst: "Create your first project",
-        back: "Back", tools: "Tools", terminal: "Terminal", files: "Files", run: "Run", stop: "Stop",
+        back: "Back", tools: "Tools", terminal: "Terminal", run: "Run", stop: "Stop",
         restart: "Restart", createProject: "Create Project", projectName: "Project Name",
         topic: "Topic", create: "Create", cancel: "Cancel", selectLanguage: "Select Language",
         clearAndStop: "Clear code and stop", deleteProject: "Delete project", renameProject: "Rename Project",
@@ -341,7 +307,7 @@ const translations = {
     },
     ru: {
         projects: "Проекты", noProjects: "Нет проектов", createFirst: "Создайте свой первый проект",
-        back: "Назад", tools: "Инструменты", terminal: "Терминал", files: "Файлы", run: "Запустить", stop: "Остановить",
+        back: "Назад", tools: "Инструменты", terminal: "Терминал", run: "Запустить", stop: "Остановить",
         restart: "Перезапустить", createProject: "Создать проект", projectName: "Имя проекта",
         topic: "Тематика", create: "Создать", cancel: "Отмена", selectLanguage: "Выберите язык",
         clearAndStop: "Очистить код и остановить", deleteProject: "Удалить проект", renameProject: "Переименовать проект",
@@ -353,7 +319,7 @@ const translations = {
     },
     uk: {
         projects: "Проекти", noProjects: "Немає проектів", createFirst: "Створіть свій перший проект",
-        back: "Назад", tools: "Інструменти", terminal: "Термінал", files: "Файли", run: "Запустити", stop: "Зупинити",
+        back: "Назад", tools: "Інструменти", terminal: "Термінал", run: "Запустити", stop: "Зупинити",
         restart: "Перезапустити", createProject: "Створити проект", projectName: "Ім'я проекту",
         topic: "Тематика", create: "Створити", cancel: "Скасувати", selectLanguage: "Виберіть мову",
         clearAndStop: "Очистити код і зупинити", deleteProject: "Видалити проект", renameProject: "Перейменувати проект",
@@ -438,8 +404,7 @@ function renderProjects(projects) {
 }
 
 function openCreateModal() {
-    const projectsRef = db.ref(`py/users/${userId}/projects`);
-    projectsRef.once('value').then(snap => {
+    db.ref(`py/users/${userId}/projects`).once('value').then(snap => {
         const count = Object.keys(snap.val() || {}).length;
         if (count >= PROJECT_LIMIT) {
             alert(t('limitReached'));
@@ -469,8 +434,12 @@ function openProject(projectId) {
     document.getElementById('mainView').classList.add('hidden');
     document.getElementById('editorView').classList.remove('hidden');
     
-    // Загружаем код через Flask
-    loadCodeFromServer();
+    // Загружаем код из Firebase
+    currentProjectRef.once('value').then(snap => {
+        const p = snap.val() || {};
+        document.getElementById('codeEditor').value = p.data_py || '';
+        updateRunButton(p.status || 'offline');
+    });
     
     currentProjectRef.on('value', snap => {
         const p = snap.val() || {};
@@ -486,18 +455,6 @@ function openProject(projectId) {
             openTerminalModal();
         }
     });
-}
-
-async function loadCodeFromServer() {
-    try {
-        const response = await fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`);
-        if (response.ok) {
-            const code = await response.text();
-            document.getElementById('codeEditor').value = code;
-        }
-    } catch (e) {
-        console.error('Load code error:', e);
-    }
 }
 
 function updateRunButton(status) {
@@ -534,21 +491,8 @@ function toggleProject() {
 async function startProject() {
     const code = document.getElementById('codeEditor').value;
     
-    // Отправляем код на Flask как plain text
-    try {
-        const response = await fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-            body: code
-        });
-        if (!response.ok) {
-            alert('Failed to save code');
-            return;
-        }
-    } catch (e) {
-        alert('Connection error: ' + e.message);
-        return;
-    }
+    // Сохраняем код в Firebase
+    await currentProjectRef.update({ data_py: code });
     
     // Очищаем логи и ставим статус
     db.ref(`py/users/${userId}/projects/${currentProjectId}/logs`).remove();
@@ -568,6 +512,10 @@ function restartProject() {
 }
 
 function goBack() {
+    // Сохраняем код перед выходом
+    const code = document.getElementById('codeEditor').value;
+    currentProjectRef.update({ data_py: code });
+    
     if (logsListener) {
         db.ref(`py/users/${userId}/projects/${currentProjectId}/logs`).off('child_added', logsListener);
         logsListener = null;
@@ -585,10 +533,6 @@ function openTerminalModal() {
     document.getElementById('terminalModal').classList.add('active');
     const container = document.getElementById('terminalContainer');
     container.scrollTop = container.scrollHeight;
-}
-function openFilesModal() {
-    document.getElementById('filesModal').classList.add('active');
-    loadFiles();
 }
 function openRenameModal() {
     document.getElementById('renameInput').value = currentProjectId;
@@ -621,20 +565,13 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 function clearAndStop() {
     if (!confirm(t('confirmClear'))) return;
     document.getElementById('codeEditor').value = '';
-    // Очищаем код на сервере
-    fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-        body: ''
-    });
-    currentProjectRef.update({ status: 'offline' });
+    currentProjectRef.update({ data_py: '', status: 'offline' });
     closeModal('toolsModal');
 }
 
 async function deleteProject() {
     if (!confirm(t('confirmDelete'))) return;
     try {
-        // Просто удаляем ключ напрямую
         await currentProjectRef.remove();
         closeModal('toolsModal');
         goBack();
@@ -650,7 +587,6 @@ function escapeHtml(text) {
 }
 
 function parseAnsi(text) {
-    // Regex для ANSI escape последовательностей
     const ansiRegex = /\x1b\[([0-9;]*)m/g;
     let result = '';
     let lastIndex = 0;
@@ -671,7 +607,6 @@ function parseAnsi(text) {
     };
     
     while ((match = ansiRegex.exec(text)) !== null) {
-        // Добавляем текст до escape последовательности
         result += `<span style="${buildStyle(styles)}">${escapeHtml(text.slice(lastIndex, match.index))}</span>`;
         lastIndex = match.index + match[0].length;
         
@@ -700,7 +635,6 @@ function parseAnsi(text) {
         }
     }
     
-    // Добавляем оставшийся текст
     result += `<span style="${buildStyle(styles)}">${escapeHtml(text.slice(lastIndex))}</span>`;
     return result;
 }
@@ -727,7 +661,6 @@ function addTerminalLine(message, type = 'info') {
     line.className = `terminal-line ${type}`;
     
     if (type === 'error' || type === 'info') {
-        // Парсим ANSI коды
         line.innerHTML = parseAnsi(message);
     } else {
         line.textContent = message;
@@ -745,118 +678,23 @@ async function sendCommand() {
     
     addTerminalLine(`$ ${cmd}`, 'user-cmd');
     
-    try {
-        const response = await fetch(`${SERVER_URL}/command/${userId}/${currentProjectId}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ command: cmd + '\n' })
-        });
-        if (!response.ok) {
-            const err = await response.text();
-            addTerminalLine(`Error: ${err}`, 'error');
-        }
-    } catch (e) {
-        addTerminalLine(`Connection error: ${e.message}`, 'error');
-    }
+    // Отправляем команду через Firebase
+    const cmdRef = db.ref(`py/users/${userId}/projects/${currentProjectId}/stdin`);
+    await cmdRef.push({
+        command: cmd,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
 }
 
 document.getElementById('terminalInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') sendCommand();
 });
 
-// ===== FILES =====
-async function loadFiles() {
-    const list = document.getElementById('filesList');
-    list.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;">Loading...</div>';
-    
-    try {
-        const response = await fetch(`${SERVER_URL}/files/${userId}/${currentProjectId}`);
-        if (!response.ok) throw new Error('Failed to load files');
-        const files = await response.json();
-        
-        list.innerHTML = '';
-        if (files.length === 0) {
-            list.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;">No files</div>';
-            return;
-        }
-        
-        files.forEach(file => {
-            const item = document.createElement('div');
-            item.className = 'file-item';
-            const ext = file.name.split('.').pop().toUpperCase();
-            item.innerHTML = `
-                <div class="file-info">
-                    <div class="file-icon">${ext.substring(0, 3)}</div>
-                    <div>
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${formatSize(file.size)}</div>
-                    </div>
-                </div>
-                <div class="file-actions">
-                    <button class="file-btn" onclick="downloadFile('${file.name}')">Download</button>
-                    ${file.name !== 'main.py' ? `<button class="file-btn danger" onclick="deleteFile('${file.name}')">Delete</button>` : ''}
-                </div>`;
-            list.appendChild(item);
-        });
-    } catch (e) {
-        list.innerHTML = `<div style="color: var(--danger); text-align: center; padding: 20px;">Error: ${e.message}</div>`;
-    }
-}
-
-function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-}
-
-async function uploadFiles() {
-    const input = document.getElementById('fileInput');
-    const files = input.files;
-    if (!files.length) return;
-    
-    for (const file of files) {
-        const formData = new FormData();
-        formData.append('file', file);
-        
-        try {
-            const response = await fetch(`${SERVER_URL}/files/${userId}/${currentProjectId}/upload`, {
-                method: 'POST', body: formData
-            });
-            if (!response.ok) throw new Error('Upload failed');
-        } catch (e) {
-            alert(`Error uploading ${file.name}: ${e.message}`);
-        }
-    }
-    
-    input.value = '';
-    loadFiles();
-}
-
-function downloadFile(filename) {
-    window.open(`${SERVER_URL}/files/${userId}/${currentProjectId}/download/${filename}`, '_blank');
-}
-
-async function deleteFile(filename) {
-    if (!confirm(`Delete ${filename}?`)) return;
-    try {
-        const response = await fetch(`${SERVER_URL}/files/${userId}/${currentProjectId}/${filename}`, { method: 'DELETE' });
-        if (!response.ok) throw new Error('Delete failed');
-        loadFiles();
-    } catch (e) {
-        alert(`Error: ${e.message}`);
-    }
-}
-
 // ===== ENV VARS =====
 async function loadEnvVars() {
-    try {
-        const response = await fetch(`${SERVER_URL}/env/${userId}/${currentProjectId}`);
-        if (!response.ok) throw new Error('Failed to load env vars');
-        envVarsCache = await response.json();
-        renderEnvList();
-    } catch (e) {
-        document.getElementById('envList').innerHTML = `<div style="color: var(--danger); text-align: center; padding: 20px;">Error: ${e.message}</div>`;
-    }
+    const snap = await db.ref(`py/users/${userId}/projects/${currentProjectId}/env`).once('value');
+    envVarsCache = snap.val() || {};
+    renderEnvList();
 }
 
 function renderEnvList() {
@@ -875,7 +713,7 @@ function renderEnvList() {
         item.className = 'env-item';
         item.innerHTML = `
             <div style="flex: 1; min-width: 0;">
-                <div class="env-name">${name}</div>
+                <div class="env-name">${escapeHtml(name)}</div>
                 <div class="env-value" data-value="${escapeAttr(value)}" data-shown="false">••••••••</div>
             </div>
             <div class="env-actions">
@@ -922,7 +760,6 @@ async function copyEnvValue(name) {
         await navigator.clipboard.writeText(value);
         alert('Copied!');
     } catch (e) {
-        // Fallback
         const ta = document.createElement('textarea');
         ta.value = value;
         document.body.appendChild(ta);
@@ -961,32 +798,15 @@ async function saveEnvVar() {
         return;
     }
     
-    try {
-        const response = await fetch(`${SERVER_URL}/env/${userId}/${currentProjectId}/${encodeURIComponent(name)}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-            body: value
-        });
-        if (!response.ok) throw new Error('Save failed');
-        
-        closeModal('envVarModal');
-        loadEnvVars();
-    } catch (e) {
-        alert('Error: ' + e.message);
-    }
+    await db.ref(`py/users/${userId}/projects/${currentProjectId}/env/${name}`).set(value);
+    closeModal('envVarModal');
+    loadEnvVars();
 }
 
 async function deleteEnvVar(name) {
     if (!confirm(`Delete variable "${name}"?`)) return;
-    try {
-        const response = await fetch(`${SERVER_URL}/env/${userId}/${currentProjectId}/${encodeURIComponent(name)}`, {
-            method: 'DELETE'
-        });
-        if (!response.ok) throw new Error('Delete failed');
-        loadEnvVars();
-    } catch (e) {
-        alert('Error: ' + e.message);
-    }
+    await db.ref(`py/users/${userId}/projects/${currentProjectId}/env/${name}`).remove();
+    loadEnvVars();
 }
 
 // ===== AUTOSAVE =====
@@ -994,13 +814,9 @@ let saveTimeout;
 document.getElementById('codeEditor').addEventListener('input', () => {
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
-        if (currentProjectId) {
+        if (currentProjectRef) {
             const code = document.getElementById('codeEditor').value;
-            fetch(`${SERVER_URL}/code/${userId}/${currentProjectId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-                body: code
-            }).catch(e => console.error('Autosave error:', e));
+            currentProjectRef.update({ data_py: code });
         }
     }, 1000);
 });
